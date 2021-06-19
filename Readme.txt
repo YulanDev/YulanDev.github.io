@@ -1,3 +1,3 @@
-Template Name: Personal WebSite
+Template Name: Portfolio
 Author: Ajith
 
