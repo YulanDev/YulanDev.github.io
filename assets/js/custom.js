@@ -1,76 +1,133 @@
-(function($) {
-  var toggle = document.getElementById("menu-toggle");
-  var menu = document.getElementById("menu");
-  var close = document.getElementById("menu-close");
+$(document).ready(function(){
+	"use strict";
+    
+        /*==================================
+* Author        : "ThemeSine"
+* Template Name : CarVilla HTML Template
+* Version       : 1.0
+==================================== */
 
-  toggle.addEventListener("click", function(e) {
-    if (menu.classList.contains("open")) {
-      menu.classList.remove("open");
-    } else {
-      menu.classList.add("open");
-    }
-  });
 
-  close.addEventListener("click", function(e) {
-    menu.classList.remove("open");
-  });
 
-  // Close menu after click on smaller screens
-  $(window).on("resize", function() {
-    if ($(window).width() < 846) {
-      $(".main-menu a").on("click", function() {
-        menu.classList.remove("open");
-      });
-    }
-  });
 
-  $(".owl-carousel").owlCarousel({
-    items: 4,
-    lazyLoad: true,
-    loop: true,
-    dots: true,
-    margin: 30,
-    responsiveClass: true,
-    responsive: {
-      0: {
-        items: 1
-      },
-      600: {
-        items: 1
-      },
-      1000: {
-        items: 1
-      }
-    }
-  });
+/*=========== TABLE OF CONTENTS ===========
+1. Scroll To Top
+2. welcome animation support
+3. owl carousel
+======================================*/
 
-  $(".hover").mouseleave(function() {
-    $(this).removeClass("hover");
-  });
+    // 1. Scroll To Top 
+		$(window).on('scroll',function () {
+			if ($(this).scrollTop() > 300) {
+				$('.return-to-top').fadeIn();
+			} else {
+				$('.return-to-top').fadeOut();
+			}
+		});
+		$('.return-to-top').on('click',function(){
+				$('html, body').animate({
+				scrollTop: 0
+			}, 1500);
+			return false;
+		});
 
-  $(".isotope-wrapper").each(function() {
-    var $isotope = $(".isotope-box", this);
-    var $filterCheckboxes = $('input[type="radio"]', this);
+	// 2. welcome animation support
 
-    var filter = function() {
-      var type = $filterCheckboxes.filter(":checked").data("type") || "*";
-      if (type !== "*") {
-        type = '[data-type="' + type + '"]';
-      }
-      $isotope.isotope({ filter: type });
-    };
+        $(window).load(function(){
+        	$(".welcome-hero-txt h2,.welcome-hero-txt p").removeClass("animated fadeInUp").css({'opacity':'0'});
+            $(".welcome-hero-txt button").removeClass("animated fadeInDown").css({'opacity':'0'});
+        });
 
-    $isotope.isotope({
-      itemSelector: ".isotope-item",
-      layoutMode: "masonry"
-    });
+        $(window).load(function(){
+        	$(".welcome-hero-txt h2,.welcome-hero-txt p").addClass("animated fadeInUp").css({'opacity':'0'});
+            $(".welcome-hero-txt button").addClass("animated fadeInDown").css({'opacity':'0'});
+        });
 
-    $(this).on("change", filter);
-    filter();
-  });
+	
+	// 3. owl carousel
 
-  lightbox.option({
-    resizeDuration: 200,
-    wrapAround: true
-  });
-})(jQuery);
+		// i.  new-cars-carousel
+		
+			$("#new-cars-carousel").owlCarousel({
+				items: 1,
+				autoplay:true,
+				loop: true,
+				dots:true,
+				mouseDrag:true,
+				nav:false,
+				smartSpeed:1000,
+				transitionStyle:"fade",
+				animateIn: 'fadeIn',
+				animateOut: 'fadeOutLeft'
+				// navText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"]
+			});
+
+
+		// ii. .testimonial-carousel
+	
+		
+			var owl=$('.testimonial-carousel');
+			owl.owlCarousel({
+				items:3,
+				margin:0,
+				
+				loop:true,
+				autoplay:true,
+				smartSpeed:1000,
+				
+				//nav:false,
+				//navText:["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"],
+				
+				dots:false,
+				autoplayHoverPause:false,
+			
+				responsiveClass:true,
+					responsive:{
+						0:{
+							items:1
+						},
+						640:{
+							items:2
+						},
+						992:{
+							items:3
+						}
+					}
+				
+				
+			});
+
+		// iii. .brand-item (carousel)
+		
+			$('.brand-item').owlCarousel({
+				items:6,
+				loop:true,
+				smartSpeed: 1000,
+				autoplay:true,
+				dots:false,
+				autoplayHoverPause:false,
+				responsive:{
+						0:{
+							items:2
+						},
+						415:{
+							items:2
+						},
+						600:{
+							items:3
+						},
+						1000:{
+							items:6
+						}
+					}
+				});
+				
+				
+				$('.play').on('click',function(){
+					owl.trigger('play.owl.autoplay',[1000])
+				})
+				$('.stop').on('click',function(){
+					owl.trigger('stop.owl.autoplay')
+				})
+
+});
